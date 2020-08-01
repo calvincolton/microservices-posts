@@ -22,18 +22,19 @@ app.post('/posts', async (req, res) => {
     id, title
   };
 
-  try {
-    await axios.post('http://localhost:4005/events', {
-      type: 'PostCreated',
-      data: {
-        id, title
-      }
-    });
-  } catch (err) {
-    console.log(err);
-  }
+  await axios.post('http://localhost:4005/events', {
+    type: 'PostCreated',
+    data: {
+      id, title
+    }
+  });
 
   res.status(201).send(posts[id]);
+});
+
+app.post('/events', (req, res) => {
+  console.log('Event Received', req.body.type);
+  res.send({});
 });
 
 const PORT = 4000;
